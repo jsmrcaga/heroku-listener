@@ -1,0 +1,19 @@
+{
+  "name": "heroku-listener",
+  "version": "0.0.1",
+  "description": "A simple heroku listener to keep a server alive",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jo Colina <jo@jocolina.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jsmrcaga/heroku-listener.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jsmrcaga/heroku-listener/issues"
+  },
+  "homepage": "https://github.com/jsmrcaga/heroku-listener#readme"
+}
