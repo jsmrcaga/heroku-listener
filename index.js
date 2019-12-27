@@ -5,25 +5,24 @@ const server = http.createServer((req, res) => {
 	res.end('OK');
 });
 
-const keep_alive = () => {
+const keep_alive = (debug=false) => {
 	const m20 = 1000 * 60 * 5; // 5 minutes
 	setInterval(() => {
 		fishingrod.fish({
 			host: 'discord-thb-bot.herokuapp.com',
 			method: 'GET'
 		}).then(({ response }) => {
-			console.log('Kept alive', response);
+			debug && console.log('[Heroku] Kept alive: ', response);
 		}).catch(e => {
 			// wtf?
-			console.error('[KeepAlive]', e);
-			Sentry.captureException(e);
+			debug && console.error('[Heroku][KeepAlive]', e);
 		});
 	}, m20);
 };
 
 module.exports = {
 	listen: (options, cb=()=>{}) => {
-		console.log('[Heroku] Launching server...');
+		options.debug && console.log('[Heroku] Launching server...');
 		return new Promise((y, n) => {
 			return server.listen(options, (err) => {
 				if(err) {
@@ -31,9 +30,9 @@ module.exports = {
 				}
 
 				options.debug && console.log('[Heroku] Server alive, launching scheduler');
-				keep_alive();
-				cb();
-				return y();
+				keep_alive(options.debug);
+				cb(server);
+				return y(server);
 			});
 		});
 	}
